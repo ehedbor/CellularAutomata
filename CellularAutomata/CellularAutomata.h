@@ -1,26 +1,25 @@
 #pragma once
 #include <vector>
-#include "Cell.h"
-#include <functional>
 #include <random>
+#include "Cell.h"
 
-using GridRow = std::vector<Cell>;
-using Grid = std::vector<GridRow>;
+
 
 class CellularAutomata
 {
 private:
-	std::mt19937 _engine{ std::random_device()() };
+	std::mt19937 _engine{ std::random_device{}() };
 	std::uniform_int_distribution<int> _dist{0, 1};
 
-	int _width{};
-	int _height{};
-	Grid _grid{};
+	int _width;
+	int _height;
+	Grid _grid;
 
 public:
-	CellularAutomata(int width, int height);
+    CellularAutomata(int width, int height);
     explicit CellularAutomata(const Grid &grid);
+	virtual ~CellularAutomata() = default;
 
-	void forEachCell(const std::function<void(int, int)> &callback) const;
+	virtual void update() = 0;
 };
 
