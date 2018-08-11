@@ -3,8 +3,8 @@
 
 enum class Cell
 {
-    Dead,
-    Alive
+    Dead = 0,
+    Alive = 1
 };
 
 inline const sf::Color &getCellColor(Cell cell)
