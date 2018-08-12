@@ -3,43 +3,57 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 
-/**
- * Controls the game progression and UI elements.
- */
+/// <summary>
+/// Controls the game progression and UI elements.
+/// </summary>
 class GameWindow
 {
 public:
-	static constexpr unsigned int InitialScreenWidth = 400;
-	static constexpr unsigned int InitialScreenHeight = 400;
-	static constexpr int UpdateIntervalMs = 200;
+    /// <summary>
+    /// The width of the viewport before being resized.
+    /// </summary>
+    static constexpr unsigned int InitialScreenWidth = 400;
+
+    /// <summary>
+    /// The height of the viewport before being resized.
+    /// </summary>
+    static constexpr unsigned int InitialScreenHeight = 400;
+
+    /// <summary>
+    /// The number of milliseconds between each update.
+    /// </summary>
+    static constexpr int UpdateIntervalMs = 200;
 
 private:
-	std::shared_ptr<Automaton> _automatonPtr;
-	sf::RenderWindow _window{ sf::VideoMode{InitialScreenWidth, InitialScreenHeight}, "Cellular Automata" };
-	sf::Clock _clock{};
-	bool _gamePaused{ true };
+    std::shared_ptr<Automaton> _automatonPtr;
+    sf::RenderWindow _window{sf::VideoMode{InitialScreenWidth, InitialScreenHeight}, "Cellular Automata"};
+    sf::Clock _clock{};
+    bool _gamePaused{true};
 
-	/**
-	 * Handles a single SFML event.
-	 */
-	void handleEvent(sf::Event &event);
+    /// <summary>
+    /// Handles a single SFML event.
+    /// </summary>
+    void handleEvent(sf::Event &event);
 
-	/**
-	 * Draws the grid representation.
-	 */
-	void drawGrid();
+    /// <summary>
+    /// Draws the representation of the automaton.
+    /// </summary>
+    void drawGrid();
 
-	/**
-	 * Updates the automaton to the next state.
-	 */
-	void updateAutomaton();
+    /// <summary>
+    /// Updates the automaton to the next state.
+    /// </summary>
+    void updateAutomaton();
 
 public:
-	explicit GameWindow(std::shared_ptr<Automaton> automatonPtr);
+    /// <summary>
+    /// Constructs a new GameWindow.
+    /// </summary>
+    /// <param name="automatonPtr">A pointer to the automaton to be used.</param>
+    explicit GameWindow(std::shared_ptr<Automaton> automatonPtr);
 
-	/**
-	 * Starts the main game loop.
-	 */
-	void start();
+    /// <summary>
+    /// Starts the main game loop.
+    /// </summary>
+    void start();
 };
-

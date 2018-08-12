@@ -1,18 +1,17 @@
 #include "stdafx.h"
 #include "GameOfLife.h"
-#include <iostream>
 
 GameOfLife::GameOfLife()
 {
-	setupGrid();
+	generateGrid();
 }
 
 GameOfLife::GameOfLife(int width, int height) : Automaton(width, height)
 {
-	setupGrid();
+	generateGrid();
 }
 
-void GameOfLife::setupGrid()
+void GameOfLife::generateGrid()
 {
 	std::uniform_int_distribution<std::underlying_type<Cell>::type> dist(0, 1);
 	for (auto &row : grid())

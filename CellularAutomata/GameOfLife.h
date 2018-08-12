@@ -5,7 +5,8 @@
 
 /// <summary>
 /// An implementation of Conway's Game of Life.  
-/// 
+/// </summary>
+/// <remarks>
 /// The full rules are as follows:
 /// <list type="number">
 ///     <item>
@@ -21,21 +22,23 @@
 ///         <description>Any dead cell with exactly three live neighbors becomes a live cell.</description>
 ///     </item>
 /// </list>
-/// </summary>
+/// </remarks>
 class GameOfLife : public Automaton
 {
 private:
-	std::mt19937 _random{ std::random_device()() };
+    std::mt19937 _random{std::random_device()()};
 
-	void setupGrid();
+    /// <summary>
+    /// Initializes each value in the grid to a random cell.
+    /// </summary>
+    void generateGrid();
 
 protected:
-	Cell nextCellState(int x, int y) const override;
+    Cell nextCellState(int x, int y) const override;
 
 public:
-	GameOfLife();
+    GameOfLife();
     GameOfLife(int width, int height);
 
-	void update() override;
+    void update() override;
 };
-
