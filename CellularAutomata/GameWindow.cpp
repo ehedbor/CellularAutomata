@@ -1,8 +1,11 @@
 #include "stdafx.h"
 #include "GameWindow.h"
 
-GameWindow::GameWindow(std::shared_ptr<Automaton> automatonPtr) 
-    : _automatonPtr(automatonPtr)
+GameWindow::GameWindow(std::shared_ptr<Automaton> automatonPtr, unsigned int screenWidth, unsigned int screenHeight, const sf::String &title) : 
+    _automatonPtr(automatonPtr),
+	_window(sf::VideoMode(screenWidth, screenHeight), title),
+	_initialScreenWidth(screenWidth),
+    _initialScreenHeight(screenHeight)
 {
 }
 
@@ -76,8 +79,8 @@ void GameWindow::drawGrid()
         for (auto y = 0; y < _automatonPtr->height(); y++)
         {
             // create a square for each cell. it's color is determined by its state.    
-            auto width = static_cast<float>(InitialScreenWidth / _automatonPtr->width());
-            auto height = static_cast<float>(InitialScreenHeight / _automatonPtr->height());
+            auto width = static_cast<float>(_initialScreenWidth / _automatonPtr->width());
+            auto height = static_cast<float>(_initialScreenHeight / _automatonPtr->height());
 
             sf::RectangleShape square(sf::Vector2f(width, height));
             square.setPosition(x * width, y * height);

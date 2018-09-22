@@ -10,14 +10,9 @@ class GameWindow
 {
 public:
     /// <summary>
-    /// The width of the viewport before being resized.
+    /// The default size of the viewport before being resized.
     /// </summary>
-    static constexpr unsigned int InitialScreenWidth = 400;
-
-    /// <summary>
-    /// The height of the viewport before being resized.
-    /// </summary>
-    static constexpr unsigned int InitialScreenHeight = 400;
+    static constexpr unsigned int DefaultScreenSize = 400;
 
     /// <summary>
     /// The number of milliseconds between each update.
@@ -25,8 +20,10 @@ public:
     static constexpr int UpdateIntervalMs = 200;
 
 private:
-    std::shared_ptr<Automaton> _automatonPtr;
-    sf::RenderWindow _window{sf::VideoMode{InitialScreenWidth, InitialScreenHeight}, "Cellular Automata"};
+	std::shared_ptr<Automaton> _automatonPtr;
+	sf::RenderWindow _window;
+	unsigned int _initialScreenWidth{ DefaultScreenSize };
+	unsigned int _initialScreenHeight{ DefaultScreenSize };
     sf::Clock _clock{};
     bool _gamePaused{true};
 
@@ -50,7 +47,10 @@ public:
     /// Constructs a new GameWindow.
     /// </summary>
     /// <param name="automatonPtr">A pointer to the automaton to be used.</param>
-    explicit GameWindow(std::shared_ptr<Automaton> automatonPtr);
+    /// <param name="screenWidth">The initial screen width in pixels.</param>
+	/// <param name="screenHeight">The initial screen height in pixels.</param>
+	/// <param name="title">The name of the viewport.</param>
+	GameWindow(std::shared_ptr<Automaton> automatonPtr, unsigned int screenWidth, unsigned int screenHeight, const sf::String &title);
 
     /// <summary>
     /// Starts the main game loop.
