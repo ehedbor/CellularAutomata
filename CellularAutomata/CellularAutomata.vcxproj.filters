@@ -33,6 +33,9 @@
     <ClInclude Include="Automaton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WireWorld.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -48,6 +51,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Automaton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WireWorld.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

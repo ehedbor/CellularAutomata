@@ -2,6 +2,8 @@
 #include <random>
 #include "Cell.h"
 #include "Automaton.h"
+#include <SFML/Graphics/Color.hpp>
+#include <string>
 
 /// <summary>
 /// An implementation of Conway's Game of Life.  
@@ -25,6 +27,22 @@
 /// </remarks>
 class GameOfLife : public Automaton
 {
+public:
+    struct Cell
+    {
+		Cell() = delete;
+		~Cell() = delete;
+		Cell(const Cell &) = delete;
+		Cell &operator=(const Cell &) = delete;
+		Cell(Cell &&) = delete;
+		Cell &operator=(Cell &&) = delete;
+
+		static constexpr cell_t Dead = 0;
+		static constexpr cell_t Alive = 1;
+
+		static std::string toString(cell_t cell);
+    };
+
 private:
     std::mt19937 _random{std::random_device()()};
 
@@ -34,11 +52,18 @@ private:
     void generateGrid();
 
 protected:
-    Cell nextCellState(int x, int y) const override;
+    cell_t nextCellState(int x, int y) const override;
 
 public:
     GameOfLife();
     GameOfLife(int width, int height);
 
     void update() override;
+
+    void printDebugInfoFor(int x, int y) const override;
+
+    const sf::Color &getColorForCell(int x, int y) const override;
+
+    void cycleNext(int x, int y) override;
+    void cyclePrev(int x, int y) override;
 };

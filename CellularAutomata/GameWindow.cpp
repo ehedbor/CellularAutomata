@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "GameWindow.h"
 
-GameWindow::GameWindow(std::shared_ptr<Automaton> automatonPtr) : _automatonPtr(automatonPtr)
+GameWindow::GameWindow(std::shared_ptr<Automaton> automatonPtr) 
+    : _automatonPtr(automatonPtr)
 {
 }
 
@@ -46,11 +47,12 @@ void GameWindow::handleEvent(sf::Event &event)
 
             switch (event.mouseButton.button)
             {
+                // TODO: Change how events are handled
                 case sf::Mouse::Left:
-                    (*_automatonPtr)[x][y] = Cell::Alive;
+					_automatonPtr->cycleNext(x, y);
                     break;
                 case sf::Mouse::Right:
-                    (*_automatonPtr)[x][y] = Cell::Dead;
+					_automatonPtr->cyclePrev(x, y);
                     break;
                 case sf::Mouse::Middle:
 #ifdef _DEBUG
@@ -79,11 +81,7 @@ void GameWindow::drawGrid()
 
             sf::RectangleShape square(sf::Vector2f(width, height));
             square.setPosition(x * width, y * height);
-            if (_automatonPtr->grid()[x][y] == Cell::Alive)
-                square.setFillColor(sf::Color::Blue);
-            else
-                square.setFillColor(sf::Color::White);
-
+			square.setFillColor(_automatonPtr->getColorForCell(x, y));
             _window.draw(square);
         }
     }

@@ -13,28 +13,29 @@ Automaton::Automaton(int width, int height) :
 {
 }
 
-int Automaton::getCellNeighborCount(int x, int y) const
+int Automaton::getNeighborCountWithType(int x, int y, cell_t cellType) const
 {
-    auto neighbors = 0;
-    for (auto dx = -1; dx <= 1; dx++)
-    {
-        for (auto dy = -1; dy <= 1; dy++)
-        {
-            // skip the center cell; it cannot be a neighbor to itself
-            if (dx == 0 && dy == 0) continue;
+	auto neighbors = 0;
+	for (auto dx = -1; dx <= 1; dx++)
+	{
+		for (auto dy = -1; dy <= 1; dy++)
+		{
+			// skip the center cell; it cannot be a neighbor to itself
+			if (dx == 0 && dy == 0) continue;
 
-            auto nx = x + dx;
-            auto ny = y + dy;
-            // ensure neighbor exists
-            if (nx >= 0 && nx < width() && ny >= 0 && ny < height())
-            {
-                // cell is a neighbor if it's alive
-                neighbors += static_cast<int>(_grid[nx][ny]);
-            }
-        }
-    }
+			auto nx = x + dx;
+			auto ny = y + dy;
+			// ensure neighbor exists
+			if (nx >= 0 && nx < width() && ny >= 0 && ny < height())
+			{
+				// cell is a neighbor if it's type matches the given type
+				auto isNeighbor = (*this)[nx][ny] == cellType;
+				neighbors += isNeighbor ? 1 : 0;
+			}
+		}
+	}
 
-    return neighbors;
+	return neighbors;
 }
 
 void Automaton::update()
@@ -84,9 +85,6 @@ Automaton::GridRow &Automaton::operator[](int x)
 
 void Automaton::printDebugInfoFor(int x, int y) const
 {
-    std::cout << "grid[" << x << "][" << y << "] ";
-    std::cout << "is dead=" << (_grid[x][y] == Cell::Dead) << " ";
-    std::cout << "neighbors=" << getCellNeighborCount(x, y) << " ";
-    std::cout << "will die=" << (nextCellState(x, y) == Cell::Dead) << " ";
-    std::cout << std::endl;
+	std::cout << "grid[" << x << "][" << y << "] ";
+	std::cout << std::endl;
 }

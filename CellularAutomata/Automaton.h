@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Cell.h"
+#include <SFML/Graphics/Color.hpp>
 
 
 /// <summary>
@@ -9,8 +10,9 @@
 class Automaton
 {
 public:
-    static constexpr int DefaultSize = 20;
-    using GridRow = std::vector<Cell>;
+	static constexpr int DefaultSize = 20;
+    
+    using GridRow = std::vector<cell_t>;
     using Grid = std::vector<GridRow>;
 
 private:
@@ -19,16 +21,15 @@ private:
     Grid _grid{};
 
 protected:
-
-    /// <summary>
-    /// Convenience function that returns the number of living cells surrounding the given cell.
-    /// </summary>
-    int getCellNeighborCount(int x, int y) const;
-
     /// <summary>
     /// Returns the next state for a particular cell based on the existing state.
     /// </summary>
-    virtual Cell nextCellState(int x, int y) const = 0;
+    virtual cell_t nextCellState(int x, int y) const = 0;
+
+	/// <summary>
+	/// Returns the number of cells surrounding the given cell with the given cell type.
+	/// </summary>
+	int getNeighborCountWithType(int x, int y, cell_t cellType) const;
 
 public:
     /// <summary>
@@ -60,12 +61,22 @@ public:
     /// </summary>
     virtual void printDebugInfoFor(int x, int y) const;
 
+    /// <summary>
+    /// Returns the color for the given cell.
+    /// </summary>
+	virtual const sf::Color &getColorForCell(int x, int y) const = 0;
+
+	virtual void cycleNext(int x, int y) = 0;
+	virtual void cyclePrev(int x, int y) = 0;
 
     // mutator/accessor methods
+public:
     int width() const;
     int height() const;
-    Grid &grid();
-    const Grid &grid() const;
     const GridRow &operator[](int x) const;
     GridRow &operator[](int x);
+
+protected:
+	Grid &grid();
+	const Grid &grid() const;
 };
